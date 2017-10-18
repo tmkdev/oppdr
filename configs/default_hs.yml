@@ -7,6 +7,27 @@ graph_default:
   tools: "pan,wheel_zoom,box_zoom,reset,box_select"
 
 graphs:
+  driver:
+    title: "Driver Input"
+    x_axis_label: "Time"
+    y_axis_label: "Inputs"
+    series:
+      "Acceleration":
+        x: 'time'
+        y: 'accelerator_actual_position'
+        color: 'green'
+        type: line_cross
+      "WheelPos":
+        x: 'time'
+        y: 'steering_wheel_angle'
+        color: 'orange'
+        type: line_cross
+      "BrakePedal":
+        x: 'time'
+        y: 'platform_brake_position'
+        color: 'purple'
+        type: line_cross
+
   rpms:
     title: "Engine Speed"
     y_axis_label: "RPM"
@@ -16,26 +37,7 @@ graphs:
         y: 'engine_speed'
         color: 'red'
         type: line_cross
-  temperatures:
-    title: "Temperatures"
-    x_axis_label: "Time"
-    y_axis_label: "Temp (C)"
-    series:
-      "Engine Coolant Temp":
-        x: 'time'
-        y: 'engine_coolant_temperature'
-        color: 'red'
-        type: line_cross
-      "Intake Temperature":
-        x: 'time'
-        y: 'engine_intake_temperature'
-        color: 'cyan'
-        type: line_cross
-      "Trans Oil Temp":
-        x: 'time'
-        y: 'trans_oil_temp'
-        color: 'orange'
-        type: line_cross
+
   speed:
     title: "Speed"
     x_axis_label: "Time"
@@ -47,16 +49,17 @@ graphs:
         color: 'green'
         type: line_cross
 
+
   accelquad:
-    title: "Accelerations"
-    x_axis_label: "Lateral"
+    title: "Acceleration Quadrant"
+    x_axis_label: "Lateral(m/s^2)"
     x_axis_type: linear
-    y_axis_label: "Longnitudanal"
+    y_axis_label: "Longitudinal(m/s^2}"
     series:
       "Speed":
         x: 'vehicle_stability_lateral_acceleration'
         y: 'accel'
-        color: 'orange'
+        color: 'red'
         type: circle
 
   braking:
@@ -80,26 +83,6 @@ graphs:
         color: 'cyan'
         type: line_cross
 
-  driver:
-    title: "Driver Input"
-    x_axis_label: "Time"
-    y_axis_label: "Inputs"
-    series:
-      "Acceleration":
-        x: 'time'
-        y: 'accelerator_actual_position'
-        color: 'green'
-        type: line_cross
-      "WheelPos":
-        x: 'time'
-        y: 'steering_wheel_angle'
-        color: 'orange'
-        type: line_cross
-      "BrakePedal":
-        x: 'time'
-        y: 'platform_brake_position'
-        color: 'purple'
-        type: line_cross
   transmission:
     title: "Transmission"
     x_axis_label: "Time"
@@ -115,4 +98,26 @@ graphs:
         y: 'transmission_commanded_gear'
         color: 'red'
         type: line_cross
+
+  temperatures:
+    title: "Temperatures"
+    x_axis_label: "Time"
+    y_axis_label: "Temp (C)"
+    series:
+      "Engine Coolant Temp":
+        x: 'time'
+        y: 'engine_coolant_temperature'
+        color: 'red'
+        type: line_cross
+      "Intake Temperature":
+        x: 'time'
+        y: 'engine_intake_temperature'
+        color: 'cyan'
+        type: line_cross
+      "Trans Oil Temp":
+        x: 'time'
+        y: 'trans_oil_temp'
+        color: 'orange'
+        type: line_cross
+
 
