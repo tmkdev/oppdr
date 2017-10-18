@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<NetworkDefinition xmlns="http://kayak.2codeornot2code.org/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="Definition.xsd">
+  <Document name="GMLAN_LS" version="0.1" author="TMKDEV" company="TMKDEV" date='2017-10-07'/>
+  <Node id="97" name="VCIM"/>
+  <Bus name="GMLAN_LS">
+    <Message id="0x100aa097" length="8" name="GPS Lat Long"  format="extended">
+      <Producer>
+        <NodeRef id="97"/>
+      </Producer>
+      <Signal name="latitude_valid" offset="6" length="1">
+      </Signal>
+      <Signal name="latitude" offset="24" length="30" endianess="big">
+         <Value type="signed" slope="0.00000027777" intercept="0" unit="Degree"/>
+      </Signal>
+      <Signal name="longitude_valid" offset="39" length="1">
+      </Signal>
+      <Signal name="longitude" offset="56" length="31" endianess="big">
+         <Value type="signed" slope="0.000000277777" intercept="0" unit="Degree"/>
+      </Signal>
+    </Message>
+    <Message id="0x100a6097" length="6" name="GPS Time"  format="extended">
+      <Producer>
+        <NodeRef id="97"/>
+      </Producer>
+      <Signal name="year" offset="0" length="8">
+         <Value type="unsigned" slope="1" intercept="2000" unit="Year"/>
+      </Signal>
+      <Signal name="month" offset="8" length="4">
+         <Value type="unsigned" slope="1" intercept="0" unit="Month"/>
+      </Signal>
+      <Signal name="day" offset="16" length="5">
+         <Value type="unsigned" slope="1" intercept="0" unit="Day"/>
+      </Signal>
+      <Signal name="hour" offset="24" length="5">
+         <Value type="unsigned" slope="1" intercept="0" unit="Hour"/>
+      </Signal>
+      <Signal name="minute" offset="32" length="6">
+         <Value type="unsigned" slope="1" intercept="0" unit="Minute"/>
+      </Signal>
+      <Signal name="second" offset="40" length="6">
+         <Value type="unsigned" slope="1" intercept="0" unit="Second"/>
+      </Signal>
+    </Message>
+    <Message id="0x100aC097" length="8" name="GPS Extended"  format="extended">
+      <Producer>
+        <NodeRef id="97"/>
+      </Producer>
+      <Signal name="heading" offset="8" length="12">
+         <Value type="unsigned" slope="1" intercept="0" unit="Degrees"/>
+      </Signal>
+      <Signal name="dop" offset="24" length="10">
+         <Value type="unsigned" slope="0.1" intercept="0" unit="m"/>
+      </Signal>
+      <Signal name="gps_speed" offset="32" length="8">
+         <Value type="unsigned" slope="1" intercept="0" unit="km/h"/>
+      </Signal>
+      <Signal name="elevation" offset="56" length="8">
+         <Value type="unsigned" slope="1" intercept="0" unit="m"/>
+      </Signal>
+    </Message>
+  </Bus>
+</NetworkDefinition>

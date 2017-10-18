@@ -1,0 +1,297 @@
+<?xml version="1.0" ?>
+<NetworkDefinition xmlns="http://kayak.2codeornot2code.org/1.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="Definition.xsd">
+  <Document name="GMLAN_HS" version="0.1" author="TMKDEV" company="TMKDEV" date='2017-08-08'/>
+  <Node id="1" name="PPEI Engine"/>
+  <Node id="2" name="PPEI Chassis"/>
+  <Node id="3" name="PPEI Fuel System"/>
+  <Node id="4" name="PPEI Transmission"/>
+
+  <Bus name="GMLAN_HS">
+
+    <Message id="0x0c9" length="7" name="PPEI Engine General Status 1">
+      <Producer>
+        <NodeRef id="1"/>
+      </Producer>
+      <Signal name="engine_run_active" offset="7" length="1">
+          <Notes>EngRun</Notes>
+      </Signal>
+      <Signal name="powertrain_crank_active" offset="6" length="1">
+          <Notes>PTCrank</Notes>
+      </Signal>
+      <Signal name="powertrain_crank_aborted" offset="5" length="1">
+          <Notes>PTCrankAbort</Notes>
+      </Signal>
+      <Signal name="powertrain_run_aborted" offset="4" length="1">
+          <Notes>PTRunAbort</Notes>
+      </Signal>
+      <Signal name="engine_idle_active" offset="2" length="1">
+          <Notes>Idle</Notes>
+      </Signal>
+      <Signal name="engine_speed_status" offset="0" length="2" endianess="big">
+        <Label name="Normal Operation" value="0" type="value"/>
+        <Label name="Degraded Operation" value="1" type="value"/>
+        <Label name="Undefined" value="2" type="value"/>
+        <Label name="Invalid" value="3" type="value"/>
+        <Notes>RPMStat</Notes>
+      </Signal>
+      <Signal name="engine_speed" offset="16" length="16" endianess="big">
+         <Value type="unsigned" slope="0.25" intercept="0" unit="rpm" min="0" max="16383.75"/>
+         <Notes>RPM</Notes>
+      </Signal>
+      <Signal name="accelerator_pedal_validity" offset="31" length="1"/>
+      <Signal name="cruise_control_active" offset="30" length="1"/>
+      <Signal name="cruise_control_enabled" offset="29" length="1"/>
+      <Signal name="driver_throttle_override_detected" offset="28" length="1"/>
+      <Signal name="accelerator_actual_position" offset="32" length="8" endianess="big">
+         <Value type="unsigned" slope="0.393156" intercept="0" unit="percent" min="0" max="100"/>
+         <Notes>AccelPed</Notes>
+      </Signal>
+      <Signal name="powertrain_brake_pedal_descrete_input_valid" offset="49" length="1"/>
+      <Signal name="powertrain_brake_pedal_descrete_input_status" offset="48" length="1"/>
+    </Message>
+
+    <Message id="0x0f1" length="4" name="PPEI Engine General Status 1">
+      <Producer>
+        <NodeRef id="1"/>
+      </Producer>
+      <Signal name="moderate_brake_achieved" offset="6" length="1"/>
+      <Signal name="platform_brake_position" offset="8" length="8" endianess="big">
+         <Value type="unsigned" slope="0.393156" intercept="0" unit="percent" min="0" max="100"/>
+      </Signal>
+    </Message>
+
+
+    <Message id="0x1e9" length="8" name="PPEI Chassis General Status 1">
+      <Producer>
+        <NodeRef id="2"/>
+      </Producer>
+      <Signal name="brake_pedal_driver_applied_pressure_valid" offset="7" length="1"/>
+      <Signal name="brake_pedal_driver_applied_pressure_detected" offset="6" length="1">
+         <Notes>BreakPres</Notes>
+      </Signal>
+      <Signal name="vehicle_stability_lateral_acceleration_valid" offset="4" length="1"/>
+      <Signal name="vehicle_stability_lateral_acceleration" offset="8" length="12" endianess="big">
+         <Value type="signed" slope="0.015625" intercept="0" unit="m/s^2" min="-32" max="31.984375"/>
+         <Notes>LatAccel</Notes>
+      </Signal>
+      <Signal name="requested_gear" offset="16" length="4" endianess="big">
+         <Notes>ReqGear</Notes>
+      </Signal>
+      <Signal name="abs_active" offset="29" length="1"/>
+      <Signal name="tcs_active" offset="27" length="1"/>
+      <Signal name="vdcs_active" offset="24" length="1"/>
+      <Signal name="vdcs_yaw_rate_valid" offset="40" length="12"/>
+      <Signal name="vehicle_dynamics_yaw_rate" offset="40" length="12" endianess="big">
+         <Value type="signed" slope="0.0625" intercept="0" unit="deg/sec"/>
+         <Notes>Yaw Rate</Notes>
+      </Signal>
+      <Signal name="vdcs_understeer_valid" offset="49" length="1"/>
+      <Signal name="vdcs_understeer_active" offset="48" length="1">
+         <Notes>USteer</Notes>
+      </Signal>
+    </Message>
+
+    <Message id="0x1e5" length="8" name="PPEI Steering Wheel Angle">
+      <Producer>
+        <NodeRef id="3"/>
+      </Producer>
+      <Signal name="steering_wheel_angle" offset="16" length="16" endianess="big">
+         <Value type="signed" slope="0.0625" intercept="0" unit="deg"/>
+         <Notes>FuelPresD</Notes>
+      </Signal>
+    </Message>
+
+    <Message id="0x1eb" length="2" name="PPEI Fuel System Status">
+      <Producer>
+        <NodeRef id="3"/>
+      </Producer>
+      <Signal name="fuel_system_estimated_pressue_valid" offset="7" length="1"/>
+      <Signal name="exhaust_pressue_regulator_valve_validity" offset="6" length="1"/>
+      <Signal name="exhaust_pressue_regulator_valve_position" offset="6" length="1"/>
+      <Signal name="fuel_pressure_esimated_pressure_delivered" offset="8" length="10" endianess="big">
+         <Value type="unsigned" slope="1" intercept="0" unit="kPa"/>
+         <Notes>FuelPresD</Notes>
+      </Signal>
+    </Message>
+
+    <Message id="0x1ed" length="8" name="PPEI Fuel System Request">
+      <Producer>
+        <NodeRef id="3"/>
+      </Producer>
+      <Signal name="fuel_system_fault_present" offset="7" length="1"/>
+      <Signal name="fuel_pump_enabled_descrete_output_status" offset="6" length="1"/>
+      <Signal name="fuel_delivery_pressure_requested" offset="8" length="10" endianess="big">
+         <Value type="unsigned" slope="1" intercept="0" unit="kPa"/>
+         <Notes>FuelPresR</Notes>
+      </Signal>
+      <Signal name="inst_fuel_flow_estimate" offset="24" length="16" endianess="big">
+         <Value type="unsigned" slope="0.0009765625" intercept="0" unit="g/s"/>
+         <Notes>FuelFlow</Notes>
+      </Signal>
+      <Signal name="advance_fuel_flow_estimate" offset="40" length="16" endianess="big">
+         <Value type="unsigned" slope="0.0009765625" intercept="0" unit="g/s"/>
+         <Notes>AdvFuelFlow</Notes>
+      </Signal>
+      <Signal name="commanded_air_fuel_ratio" comment="Commanded Air Fuel Ratio" offset="56" length="16" endianess="big">
+         <Value type="unsigned" slope="0.00048828125" intercept="0"/>
+         <Notes>A/F Rat</Notes>
+      </Signal>
+    </Message>
+
+    <Message id="0x1f5" length="8" name="PPEI Transmission General Status 2">
+      <Producer>
+        <NodeRef id="3"/>
+      </Producer>
+      <Signal name="transmission_estimated_gear" offset="0" length="4" endianess="big">
+         <Value type="unsigned" slope="1" intercept="0" unit="Gear"/>
+      </Signal>
+      <Signal name="gear_shift_direction" offset="12" length="2" endianess="big">
+         <Value type="unsigned" slope="1" intercept="0" unit="Direction"/>
+      </Signal>
+      <Signal name="transmission_commanded_gear" offset="8" length="4" endianess="big">
+         <Value type="unsigned" slope="1" intercept="0" unit="Gear"/>
+      </Signal>
+    </Message>
+
+
+    <Message id="0x3d1" length="8" name="PPEI Engine General Status 2">
+      <Producer>
+        <NodeRef id="1"/>
+      </Producer>
+      <Signal name="throttle_position" offset="8" length="8" endianess="big">
+         <Value type="unsigned" slope="0.393156" intercept="0" unit="percent"/>
+         <Notes>TPS</Notes>
+      </Signal>
+      <Signal name="cruise_control_selected_speed" offset="24" length="12" endianess="big">
+         <Value type="unsigned" slope="0.0625" intercept="0" unit="kph"/>
+         <Notes>CruiseSp</Notes>
+      </Signal>
+      <Signal name="fuel_consumption_rate" offset="40" length="12" endianess="big">
+         <Value type="unsigned" slope="0.025" intercept="0" unit="l/h"/>
+         <Notes>FuelRate</Notes>
+      </Signal>
+      <Signal name="boost_pressure_indication" offset="48" length="8" endianess="big">
+         <Value type="unsigned" slope="0.393156" intercept="0" unit="percent"/>
+         <Notes>Boost</Notes>
+      </Signal>
+    </Message>
+
+    <Message id="0x4c1" length="8" name="PPEI Engine General Status 4">
+      <Producer>
+        <NodeRef id="1"/>
+      </Producer>
+      <Signal name="bar_pressure_absolute_validity" offset="7" length="1"/>
+      <Signal name="engine_coolant_temp_validity" offset="6" length="1"/>
+      <Signal name="intake_temp_validity" offset="5" length="1"/>
+      <Signal name="outside_air_estimate_temp_mask" offset="4" length="1"/>
+      <Signal name="outside_air_estimate_temp_validity" offset="3" length="1"/>
+      <Signal name="legislated_diagnostics_conditions_met" offset="2" length="1"/>
+      <Signal name="legislated_diagnostics_conditions_fault_present" offset="1" length="1"/>
+      <Signal name="engine_warmup_cycle_achieved" offset="0" length="1">
+          <Notes>EngineWarmup</Notes>
+     </Signal>
+      <Signal name="barametric_absolute_pressure" offset="8" length="8" endianess="big">
+         <Value type="unsigned" slope="0.5" intercept="0" unit="kPa"/>
+          <Notes>MAP</Notes>
+      </Signal>
+      <Signal name="engine_coolant_temperature" offset="16" length="8" endianess="big">
+         <Value type="unsigned" slope="1" intercept="-40" unit="C"/>
+          <Notes>ECT</Notes>
+      </Signal>
+      <Signal name="engine_intake_temperature" offset="24" length="8" endianess="big">
+         <Value type="unsigned" slope="1" intercept="-40" unit="C"/>
+          <Notes>IAT</Notes>
+      </Signal>
+      <Signal name="outside_air_temperature_estimate" offset="32" length="8" endianess="big">
+         <Value type="unsigned" slope="1" intercept="-40" unit="C"/>
+          <Notes>OAT</Notes>
+      </Signal>
+    </Message>
+
+    <Message id="0x2f9" length="5" name="PPEI Chassis General Status 2">
+      <Producer>
+        <NodeRef id="4"/>
+      </Producer>
+      <Signal name="brake_temperature_estimated" offset="16" length="8">
+         <Value type="unsigned" slope="4" intercept="-40" unit="C"/>
+         <Notes>TranTemp</Notes>
+      </Signal>
+      <Signal name="chassis_braking_load" offset="24" length="8">
+         <Value type="unsigned" slope="0.3921" intercept="0" unit="%"/>
+         <Notes>TranTemp</Notes>
+      </Signal>
+
+
+    </Message>
+    
+    <Message id="0x4c9" length="4" name="PPEI Engine General Status 5">
+      <Producer>
+        <NodeRef id="4"/>
+      </Producer>
+      <Signal name="trans_oil_temp_valid" offset="7" length="1"/>
+      <Signal name="trans_oil_temp_present" offset="6" length="1"/>
+      <Signal name="trans_emissions_related_malfunction" offset="5" length="1"/>
+      <Signal name="trans_non_emissions_related_malfunction" offset="4" length="1"/>
+      <Signal name="trans_oil_change_now_indicator" offset="2" length="1"/>
+      <Signal name="trans_thermal_management_status" offset="1" length="2" endianess="big"/>
+      <Signal name="trans_oil_temp" offset="8" length="8" endianess="big">
+         <Value type="unsigned" slope="1" intercept="-40" unit="C"/>
+         <Notes>TranTemp</Notes>
+      </Signal>
+    </Message>
+
+    <Message id="0x4d1" length="8" name="PPEI Transmission General Status 3">
+      <Producer>
+        <NodeRef id="1"/>
+      </Producer>
+      <Signal name="engine_oil_temp" offset="8" length="8" endianess="big">
+         <Value type="unsigned" slope="1" intercept="-40" unit="C"/>
+         <Notes>TranTemp</Notes>
+      </Signal>
+      <Signal name="engine_oil_pressure" offset="16" length="8" endianess="big">
+         <Value type="unsigned" slope="4" intercept="0" unit="kPa"/>
+         <Notes>TranTemp</Notes>
+      </Signal>
+      <Signal name="total_fuel_capacity" offset="32" length="12" endianess="big">
+         <Value type="unsigned" slope="0.125" intercept="0" unit="L"/>
+         <Notes>TranTemp</Notes>
+      </Signal>
+      <Signal name="fuel_level_percent" offset="40" length="8" endianess="big">
+         <Value type="unsigned" slope="0.39215" intercept="0" unit="%"/>
+         <Notes>TranTemp</Notes>
+      </Signal>
+    </Message>
+
+    <Message id="0x3e9" length="8" name="PPEI Vehicle Speed and Distance">
+      <Producer>
+        <NodeRef id="1"/>
+      </Producer>
+      <Signal name="speed_average_driven_validity" offset="7" length="1"/>
+      <Signal name="speed_average_driven_valid" offset="8" length="15" endianess="big">
+         <Value type="unsigned" slope="0.015625" intercept="0" unit="km/h"/>
+         <Notes>DSpeed</Notes>
+      </Signal>
+      <Signal name="vehicle_average_speed_soruce" offset="23" length="1"/>
+      <Signal name="distance_rolling_count_average_valid" offset="22" length="1"/>
+      <Signal name="distance_rolling_count_average_reset_occured" offset="21" length="1"/>
+      <Signal name="distance_rolling_count_average_driven" offset="24" length="13" endianess="big">
+         <Value type="unsigned" slope="0.125" intercept="0" unit="m"/>
+         <Notes>DDist</Notes>
+      </Signal>
+      <Signal name="vehicle_speed_average_non_driven_validity" offset="39" length="1"/>
+      <Signal name="speed_average_non_driven_valid" offset="40" length="15" endianess="big">
+         <Value type="unsigned" slope="0.015625" intercept="0" unit="km/h"/>
+         <Notes>NDSpeed</Notes>
+      </Signal>
+      <Signal name="distance_rolling_count_average_driven_source" offset="55" length="1"/>
+      <Signal name="distance_rolling_count_average_non_driven_valid" offset="54" length="1"/>
+      <Signal name="distance_rolling_count_average_non_driven_reset" offset="53" length="1"/>
+      <Signal name="distance_rolling_count_average_non_driven" offset="56" length="13" endianess="big">
+         <Value type="unsigned" slope="0.125" intercept="0" unit="m"/>
+         <Notes>NDDist</Notes>
+      </Signal>
+    </Message>
+  </Bus>
+</NetworkDefinition>

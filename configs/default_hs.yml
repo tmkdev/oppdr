@@ -1,0 +1,118 @@
+sampletime: 1
+kcd: kcd/gm_global_a_hs.kcd
+
+graph_default:
+  x_axis_type: datetime
+  x_axis_label: "Time"
+  tools: "pan,wheel_zoom,box_zoom,reset,box_select,lasso_select"
+
+graphs:
+  rpms:
+    title: "Engine Speed"
+    y_axis_label: "RPM"
+    series:
+      "RPM":
+        x: 'time'
+        y: 'engine_speed'
+        color: 'red'
+        type: line_cross
+  temperatures:
+    title: "Temperatures"
+    x_axis_label: "Time"
+    y_axis_label: "Temp (C)"
+    series:
+      "Engine Coolant Temp":
+        x: 'time'
+        y: 'engine_coolant_temperature'
+        color: 'red'
+        type: line_cross
+      "Intake Temperature":
+        x: 'time'
+        y: 'engine_intake_temperature'
+        color: 'cyan'
+        type: line_cross
+      "Trans Oil Temp":
+        x: 'time'
+        y: 'trans_oil_temp'
+        color: 'cyan'
+        type: line_cross
+  speed:
+    title: "Speed"
+    x_axis_label: "Time"
+    y_axis_label: "Speed (kph)"
+    series:
+      "Speed":
+        x: 'time'
+        y: 'speed_average_non_driven_valid'
+        color: 'green'
+        type: line_cross
+
+  accelquad:
+    title: "Accelerations"
+    x_axis_label: "Lateral"
+    x_axis_type: linear
+    y_axis_label: "Longnitudanal"
+    series:
+      "Speed":
+        x: 'vehicle_stability_lateral_acceleration'
+        y: 'accel'
+        color: 'orange'
+        type: circle
+
+  braking:
+    title: "ChassisInfo"
+    x_axis_label: "Time"
+    y_axis_label: "Status"
+    series:
+      "Brakes":
+        x: 'time'
+        y: 'brake_pedal_driver_applied_pressure_detected'
+        color: 'red'
+        type: line_cross
+      "ABS":
+        x: 'time'
+        y: 'abs_active'
+        color: 'blue'
+        type: line_cross
+      "VDCS":
+        x: 'time'
+        y: 'vdcs_understeer_active'
+        color: 'cyan'
+        type: line_cross
+
+  driver:
+    title: "Driver Input"
+    x_axis_label: "Time"
+    y_axis_label: "Inputs"
+    series:
+      "Acceleration":
+        x: 'time'
+        y: 'accelerator_actual_position'
+        color: 'green'
+        type: line_cross
+      "WheelPos":
+        x: 'time'
+        y: 'steering_wheel_angle'
+        color: 'orange'
+        type: line_cross
+      "BrakePedal":
+        x: 'time'
+        y: 'platform_brake_position'
+        color: 'purple'
+        type: line_cross
+  transmission:
+    title: "Transmission"
+    x_axis_label: "Time"
+    y_axis_label: "Gear"
+    series:
+      "Estimated Gear":
+        x: 'time'
+        y: 'transmission_estimated_gear'
+        color: 'green'
+        type: line_cross
+      "Commanded Gear":
+        x: 'time'
+        y: 'transmission_commanded_gear'
+        color: 'red'
+        type: line_cross
+
