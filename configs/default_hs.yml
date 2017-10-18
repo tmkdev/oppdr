@@ -1,10 +1,10 @@
-sampletime: 1
+sampletime: 0.5
 kcd: kcd/gm_global_a_hs.kcd
 
 graph_default:
   x_axis_type: datetime
   x_axis_label: "Time"
-  tools: "pan,wheel_zoom,box_zoom,reset,box_select,lasso_select"
+  tools: "pan,wheel_zoom,box_zoom,reset,box_select"
 
 graphs:
   rpms:
@@ -34,7 +34,7 @@ graphs:
       "Trans Oil Temp":
         x: 'time'
         y: 'trans_oil_temp'
-        color: 'cyan'
+        color: 'orange'
         type: line_cross
   speed:
     title: "Speed"
