@@ -16,11 +16,13 @@
 #include "Arduino.h"
 
 // Macchina M2 specific defines for your board
-const int SW = Button2;     // Pushbutton SW2
-const int SW2 = Button1;     // Pushbutton SW2
+const int SW = Button1;     // Pushbutton SW1
+const int SW2 = Button2;     // Pushbutton SW2
 const int Red =  DS2;       // the number of the RED LED pin
+const int Yellow =  DS3;       // the number of the Yellow LED pin
+const int Green =  DS6;       // the number of the Green LED pin
 
-// We need to create FileStore object, we will be using it to open/create file and to close file.
+
 FileStore FS;
 
 // Variables
