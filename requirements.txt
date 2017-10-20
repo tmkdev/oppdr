@@ -1,0 +1,17 @@
+bokeh==0.12.9
+can4python==0.2.1
+docopt==0.6.2
+hbmqtt==0.9
+Jinja2==2.9.6
+MarkupSafe==1.0
+numpy==1.13.3
+pandas==0.20.3
+passlib==1.7.1
+python-dateutil==2.6.1
+pytz==2017.2
+PyYAML==3.12
+scipy==0.19.1
+six==1.10.0
+tornado==4.5.2
+transitions==0.2.5
+websockets==3.3
