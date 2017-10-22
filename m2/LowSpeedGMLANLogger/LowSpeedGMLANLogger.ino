@@ -1,4 +1,4 @@
-/*  oppdr GM high speed capture
+/*  oppdr GM low speed capture
 
      Based on M2 example
      DataLogger - non-due-pins and data logger
@@ -12,10 +12,13 @@
 
 // Including Arduino_Due_SD_HSCMI library also creates SD object (MassStorage class)
 #include <Arduino_Due_SD_HSMCI.h> // This creates the object SD
-#include "Arduino.h"
-#include "variant.h"
-#include <due_can.h>
+#include <SPI.h>
+#include <MCP2515_sw_can.h>
 
+// Pin definitions specific to how the MCP2515 is wired up.
+#define CS_PIN    SPI0_CS3
+#define INT_PIN    SWC_INT
+#define Serial SerialUSB
 
 // Macchina M2 specific defines for your board
 const int SW1 = Button1;     // Pushbutton SW1
@@ -37,6 +40,13 @@ int logging = 0;
 
 #define Serial SerialUSB
 
+// Create CAN object with pins as defined
+SWcan CAN(CS_PIN, INT_PIN);
+
+void CANHandler() {
+  CAN.intHandler();
+}
+
 void setup() {
   Serial.begin(115200);
   delay(1000); // 1s delay so you have enough time to open Serial Terminal
@@ -44,17 +54,24 @@ void setup() {
   SD.Init();
   FS.Init();
 
-  Can0.begin(CAN_BPS_500K);
+  // Set up SPI Communication
+  // dataMode can be SPI_MODE0 or SPI_MODE3 only for MCP2515
+  SPI.setClockDivider(SPI_CLOCK_DIV2);
+  SPI.setDataMode(SPI_MODE0);
+  SPI.setBitOrder(MSBFIRST);
+  SPI.begin();
+  
+  // Initialize MCP2515 CAN controller at the specified speed and clock frequency
+  // (Note:  This is the oscillator attached to the MCP2515, not the Arduino oscillator)
+  //speed in KHz, clock in MHz
+  CAN.setupSW(33333); //GMLAN
+  CAN.mode(3); // Normal on the SWCAN bus. 
+  // 0 = Sleep
+  // 1 = High Speed
+  // 2 = High Voltage
+  // 3 = Normal
 
-  int filter;
-  //extended
-  for (filter = 0; filter < 2; filter++) {
-    Can0.setRXFilter(filter, 0, 0, true);
-  }
-  //standard
-  for (int filter = 2; filter < 7; filter++) {
-    Can0.setRXFilter(filter, 0, 0, false);
-  }
+  attachInterrupt(SWC_INT, CANHandler, FALLING);
 
   pinMode(Red, OUTPUT);
   pinMode(Yellow, OUTPUT);
@@ -66,14 +83,13 @@ void setup() {
   digitalWrite(Green, HIGH);
   digitalWrite(Yellow, LOW);
   digitalWrite(CanActivity, HIGH);
-
 }
 
 
 //Timestamp,ID,Data0,Data1,...,
 //412687,17F,00,00,00,00,00,00,00,00
 
-void printFrame(CAN_FRAME &frame) {
+void printFrame(Frame &frame) {
   digitalWrite(CanActivity, LOW);
   String line = String(millis());
   if ( frame.extended ) {
@@ -112,12 +128,12 @@ void writeToSD() {
 
 
 void loop() {
+  Frame message;
 
-  CAN_FRAME incoming;
   if ( logging == 0 ) {
     startlog = digitalRead(SW2);
     if ( startlog == LOW ) {
-      sprintf(fname, "HS_%04d", millis() % 10000);
+      sprintf(fname, "LS_%04d", millis() % 10000);
       Serial.println(fname);
       FS.CreateNew("0:", fname);
       FS.Close();
@@ -128,9 +144,9 @@ void loop() {
 
   }  else {
 
-    if (Can0.available() > 0) {
-      Can0.read(incoming);
-      printFrame(incoming);
+    
+    if (CAN.GetRXFrame(message)) {
+      printFrame(message);
     }
 
     if (buf.length() > 3000) {

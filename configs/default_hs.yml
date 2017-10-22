@@ -12,7 +12,7 @@ graphs:
     x_axis_label: "Time"
     y_axis_label: "Inputs"
     series:
-      "Acceleration":
+      "Throttle":
         x: 'time'
         y: 'accelerator_actual_position'
         color: 'green'
@@ -52,13 +52,13 @@ graphs:
 
   accelquad:
     title: "Acceleration Quadrant"
-    x_axis_label: "Lateral(m/s^2)"
+    x_axis_label: "Lateral(g)"
     x_axis_type: linear
-    y_axis_label: "Longitudinal(m/s^2}"
+    y_axis_label: "Longitudinal(g)"
     series:
       "Speed":
-        x: 'vehicle_stability_lateral_acceleration'
-        y: 'accel'
+        x: 'lat_g'
+        y: 'long_g'
         color: 'red'
         type: circle
 
@@ -119,5 +119,17 @@ graphs:
         y: 'trans_oil_temp'
         color: 'orange'
         type: line_cross
+
+  boost:
+    title: "Boost"
+    x_axis_label: "Time"
+    y_axis_label: "Boost(%)"
+    series:
+      "Engine Coolant Temp":
+        x: 'time'
+        y: 'boost_pressure_indication'
+        color: 'blue'
+        type: line_cross
+
 
 
