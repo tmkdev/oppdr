@@ -34,5 +34,7 @@ if __name__ == '__main__':
     pdframe = pdframe.resample('{0}S'.format(pdrconfig['sampletime'])).mean().interpolate(method='linear', limit=10, limit_direction='both')
     pdframe = pdframe.assign(accel=pdframe['speed_average_non_driven_valid'].diff() * 0.277778 / float(pdrconfig['sampletime']))
 
+    pdframe.to_csv('output/log.csv')
+
     graphfactory = GraphFactory(pdrconfig, pdframe)
     graphfactory.outputgraphs('output/default_hs.html', showplot=True)
