@@ -149,7 +149,7 @@ void loop() {
       printFrame(message);
     }
 
-    if (buf.length() > 3000) {
+    if (buf.length() > 8192) {
       writeToSD();
     }
   }
