@@ -1,0 +1,29 @@
+<DataProfile version="2" readOnly="False" startFinishDistanceThreshold="40" showDistanceThreshold="True" ignoreFirstLap="True" ignoreLastLap="True" lapTimeHoldSecs="5" isChaseCamData="False" isAimData="False" isDriftBoxData="False" sortByTime="False" autoSync="False" autoSyncOffset="0">
+  <HeaderLines>
+    <HeaderLineIndex>0</HeaderLineIndex>
+  </HeaderLines>
+  <DataStartLineIndex>-1</DataStartLineIndex>
+  <DataValueSeparators>,</DataValueSeparators>
+  <UseEuroDecimalFormat>False</UseEuroDecimalFormat>
+  <FileLineMatchers />
+  <Calculators />
+  <ColumnMappings>
+    <ColumnMapping inputColumnText="time" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="&lt;Required&gt;" dataType="Data Running Time, Seconds" />
+    <ColumnMapping inputColumnText="accelerator_pedal_validity" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Steering, Throttle, Brakes" dataType="Throttle Position" />
+    <ColumnMapping inputColumnText="speed_average_non_driven_valid" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Velocity" dataType="Speed (KPH)" />
+    <ColumnMapping inputColumnText="lat_g" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="G-Forces" dataType="Lateral Gs" />
+    <ColumnMapping inputColumnText="long_g" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="G-Forces" dataType="Acceleration Gs" />
+    <ColumnMapping inputColumnText="steering_wheel_angle" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Steering, Throttle, Brakes" dataType="Steering Angle" />
+    <ColumnMapping inputColumnText="engine_speed" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Engine, Transmission" dataType="Engine RPM" />
+    <ColumnMapping inputColumnText="transmission_commanded_gear" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Engine, Transmission" dataType="Gear" />
+    <ColumnMapping inputColumnText="engine_coolant_temperature" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Engine, Transmission" dataType="Water Temperature (C)" />
+    <ColumnMapping inputColumnText="vdcs_understeer_active" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Steering, Throttle, Brakes" dataType="Understeer" />
+    <ColumnMapping inputColumnText="trans_oil_temp_valid" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Engine, Transmission" dataType="Transmission Oil Temperature (C)" />
+    <ColumnMapping inputColumnText="platform_brake_position" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Steering, Throttle, Brakes" dataType="Brake Pressure Combined All" />
+    <ColumnMapping inputColumnText="engine_oil_pressure" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Engine, Transmission" dataType="Engine Oil Pressure (kPa)" />
+    <ColumnMapping inputColumnText="boost_pressure_indication" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Generic" dataType="Other" />
+    <ColumnMapping inputColumnText="tcs_active" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Generic" dataType="Other" />
+    <ColumnMapping inputColumnText="vdcs_active" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Generic" dataType="Other" />
+    <ColumnMapping inputColumnText="abs_active" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Generic" dataType="Other" />
+  </ColumnMappings>
+</DataProfile>

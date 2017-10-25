@@ -1,0 +1,26 @@
+<Gauge version="3" x="0" y="0" readOnly="False" width="248" height="136" transparency="1" rotation="0" thumbnailBackgroundTransparency="1" thumbnailBackgroundRed="135" thumbnailBackgroundGreen="206" thumbnailBackgroundBlue="235">
+  <Components>
+    <AnimatedArc x="125" y="125" radius="100" loop="False" syncValueRangeWithParent="False" syncAngleRangeWithParent="False" autoMinValue="False" restrictMinValue="False" lowestMinValue="0" highestMinValue="100" minValue="0" autoMaxValue="False" restrictMaxValue="False" lowestMaxValue="10" highestMaxValue="1000000" maxValue="180" minAngle="-90" maxAngle="0" penWidth="20" transparency="1" red="255" green="255" blue="0">
+      <Inputs>
+        <Input name="Value">Steering Angle</Input>
+      </Inputs>
+    </AnimatedArc>
+    <AnimatedArc x="125" y="125" radius="100" loop="False" syncValueRangeWithParent="False" syncAngleRangeWithParent="False" autoMinValue="False" restrictMinValue="False" lowestMinValue="0" highestMinValue="100" minValue="0" autoMaxValue="False" restrictMaxValue="False" lowestMaxValue="10" highestMaxValue="1000000" maxValue="-180" minAngle="270" maxAngle="180" penWidth="20" transparency="1" red="255" green="255" blue="0">
+      <Components>
+        <Arc x="1.500004" y="0" minAngle="-180" maxAngle="0" radius="90" penWidth="5" transparency="1" red="255" green="255" blue="255" />
+        <Rectangle x="0" y="-111" width="2" height="20" roundCorners="False" cornerRadius="5" penWidth="3" transparency="1" red="255" green="255" blue="255" />
+      </Components>
+      <Inputs>
+        <Input name="Value">Steering Angle</Input>
+      </Inputs>
+    </AnimatedArc>
+    <DynamicText x="69" y="76" displayType="Degrees" decimalPrecision="0" showPlus="False" restrictRange="False" restrictedMinValue="-3.40282346638529E+38" restrictedMaxValue="3.40282346638529E+38" convertFromGMT="True" fontRectWidth="109" fontRectHeight="50" fontFace="Trebuchet MS" fontSize="33.11393" fontBold="False" fontItalic="False" fontUnderline="False" fontDirection="horizontal" fontAlign="center" fontVAlign="top" fontTransparency="1" fontRed="255" fontGreen="255" fontBlue="255">
+      <Inputs>
+        <Input name="Value">Steering Angle</Input>
+      </Inputs>
+    </DynamicText>
+  </Components>
+  <Inputs>
+    <Input category="Steering, Throttle, Brakes" name="Steering Angle" fromFastestLapSamePos="False">Steering Angle</Input>
+  </Inputs>
+</Gauge>
