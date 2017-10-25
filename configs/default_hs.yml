@@ -1,5 +1,7 @@
-sampletime: 0.5
-kcd: kcd/gm_global_a_hs.kcd
+sampletime: 0.25
+kcd:
+  - kcd/gm_global_a_hs.kcd
+  - kcd/gm_global_a_ls.kcd
 
 graph_default:
   x_axis_type: datetime
@@ -12,36 +14,27 @@ graphs:
     x_axis_label: "Time"
     y_axis_label: "Inputs"
     series:
-      "Throttle":
+      "Throttle(%)":
         x: 'time'
         y: 'accelerator_actual_position'
         color: 'green'
         type: line_cross
-      "WheelPos":
+      "Steering (Deg)":
         x: 'time'
         y: 'steering_wheel_angle'
         color: 'orange'
         type: line_cross
-      "BrakePedal":
+      "Brake Position(%)":
         x: 'time'
         y: 'platform_brake_position'
         color: 'purple'
-        type: line_cross
-
-  rpms:
-    title: "Engine Speed"
-    y_axis_label: "RPM"
-    series:
-      "RPM":
-        x: 'time'
-        y: 'engine_speed'
-        color: 'red'
         type: line_cross
 
   speed:
     title: "Speed"
     x_axis_label: "Time"
     y_axis_label: "Speed (kph)"
+    x_range: 0
     series:
       "Speed":
         x: 'time'
@@ -49,6 +42,17 @@ graphs:
         color: 'green'
         type: line_cross
 
+  rpms:
+    title: "Engine Speed"
+    y_axis_label: "RPM"
+    x_axis_label: "Time"
+    x_range: 0
+    series:
+      "RPM":
+        x: 'time'
+        y: 'engine_speed'
+        color: 'red'
+        type: line_cross
 
   accelquad:
     title: "Acceleration Quadrant"
@@ -62,10 +66,23 @@ graphs:
         color: 'red'
         type: circle
 
+  transmission:
+    title: "Transmission"
+    x_axis_label: "Time"
+    y_axis_label: "Gear"
+    x_range: 0
+    series:
+      "Commanded Gear":
+        x: 'time'
+        y: 'transmission_commanded_gear'
+        color: 'red'
+        type: line_cross
+
   braking:
     title: "ChassisInfo"
     x_axis_label: "Time"
     y_axis_label: "Status"
+    x_range: 0
     series:
       "Brakes":
         x: 'time'
@@ -83,26 +100,11 @@ graphs:
         color: 'cyan'
         type: line_cross
 
-  transmission:
-    title: "Transmission"
-    x_axis_label: "Time"
-    y_axis_label: "Gear"
-    series:
-      "Estimated Gear":
-        x: 'time'
-        y: 'transmission_estimated_gear'
-        color: 'green'
-        type: line_cross
-      "Commanded Gear":
-        x: 'time'
-        y: 'transmission_commanded_gear'
-        color: 'red'
-        type: line_cross
-
   temperatures:
     title: "Temperatures"
     x_axis_label: "Time"
     y_axis_label: "Temp (C)"
+    x_range: 0
     series:
       "Engine Coolant Temp":
         x: 'time'
@@ -124,8 +126,9 @@ graphs:
     title: "Boost"
     x_axis_label: "Time"
     y_axis_label: "Boost(%)"
+    x_range: 0
     series:
-      "Engine Coolant Temp":
+      "Boost":
         x: 'time'
         y: 'boost_pressure_indication'
         color: 'blue'

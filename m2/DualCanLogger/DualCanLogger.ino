@@ -112,7 +112,7 @@ void printHSFrame(CAN_FRAME &frame) {
   if ( frame.extended ) {
     char hexval[9];
     sprintf(hexval, "%08x", frame.id);
-    line += ",HS," + String(hexval);
+    line += ",0," + String(hexval);
   } else {
     char hexval[4];
     sprintf(hexval, "%03x", frame.id);
@@ -140,7 +140,7 @@ void printLSFrame(Frame &frame) {
   } else {
     char hexval[4];
     sprintf(hexval, "%03x", frame.id);
-    line += ",LS," + String(hexval);
+    line += ",1," + String(hexval);
   }
 
   for (int count = 0; count < frame.length; count++) {

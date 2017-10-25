@@ -38,6 +38,9 @@ class GraphFactory(object):
                        y_axis_label=graphobj['y_axis_label'],
                        output_backend="webgl")
 
+            if 'x_range' in graphobj:
+                g.x_range = glist[int(graphobj['x_range'])].x_range
+
             g.add_tools(hover)
 
             for series in graphobj['series']:

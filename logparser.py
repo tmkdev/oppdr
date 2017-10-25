@@ -19,15 +19,18 @@ def getpdrconfig(file):
     return config
 
 
-def getcanconfigs(kcd):
-    canconfig = can4python.FilehandlerKcd.read("{0}".format(kcd))
+def getcanconfigs(kcds):
+    canconfigs = []
 
-    return canconfig
+    for kcd in kcds:
+        canconfigs.append(can4python.FilehandlerKcd.read("{0}".format(kcd)))
+
+    return canconfigs
 
 if __name__ == '__main__':
     pdrconfig = getpdrconfig('configs/default_hs.yml')
-    canconfig = getcanconfigs(pdrconfig['kcd'])
-    canloghandler = CanLogHandler('logs/00-06-52.csv', canconfig)
+    canconfigs = getcanconfigs(pdrconfig['kcd'])
+    canloghandler = CanLogHandler('logs/00-06-52.csv', canconfigs)
 
     pdframe = canloghandler.getdataframe()
 
