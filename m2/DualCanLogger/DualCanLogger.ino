@@ -89,6 +89,17 @@ void setup() {
 
   attachInterrupt(SWC_INT, CANHandler, FALLING);
 
+  // Filter only the required packets from LS - Cause it's a slow write to SD..
+  // 0100A0B0 - TPMS
+  // 100A6097 - OnStar GPS
+  // 100AA097 - OnStar GPS
+  // 100AC097 - OnStar GPS
+  SWCAN.InitFilters(false);
+  SWCAN.SetRXMask(MASK0, 0x1FFF1FFF, 1); // ONSTAR
+  SWCAN.SetRXFilter(FILTER0, 0x100A0097, 1);
+  SWCAN.SetRXMask(MASK1, 0x1FFFFFFF, 1); // TPMS
+  SWCAN.SetRXFilter(FILTER1, 0x1000A0B0, 1);
+
   pinMode(Red, OUTPUT);
   pinMode(Yellow, OUTPUT);
   pinMode(CanActivity, OUTPUT);
