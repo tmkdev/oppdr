@@ -15,6 +15,16 @@ class GraphFactory(object):
     def __init__(self, pdrconifg, pddata):
         self.pddata = pddata
         self.pdrconfig = pdrconifg
+        self.timehover = HoverTool(tooltips=[
+                ("Time", "$x"),
+                ("Value", "$y"),
+            ])
+        self.linhover = HoverTool(tooltips=[
+                ("Lat(g)", "$x"),
+                ("Long(g)", "$y"),
+            ])
+
+
 
     def outputgraphs(self, outputfile, showplot=True):
         output_file(outputfile, title="OPPDR Plots")
@@ -25,16 +35,15 @@ class GraphFactory(object):
         for graph in self.pdrconfig['graphs']:
             graphobj = self.pdrconfig['graphs'][graph]
 
-            hover = HoverTool(tooltips=[
-                ("Time", "$x"),
-                ("Value", "$y"),
-            ],
-            )
+            hover = self.timehover
+            x_axis_type = getgraphparm(self.pdrconfig, graph, 'x_axis_type')
+            if x_axis_type == 'linear':
+                hover = self.linhover
 
             g = figure(tools=self.pdrconfig['graph_default']['tools'],
                        title=graphobj['title'],
                        x_axis_label=getgraphparm(self.pdrconfig, graph, 'x_axis_label'),
-                       x_axis_type=getgraphparm(self.pdrconfig, graph, 'x_axis_type'),
+                       x_axis_type=x_axis_type,
                        y_axis_label=graphobj['y_axis_label'],
                        output_backend="webgl")
 
