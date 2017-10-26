@@ -40,7 +40,7 @@ FileStore FS;
 int startlog = 0;
 
 char fname[10];
-String buf = "";
+char buf[10000];
 int logging = 0;
 
 // Create CAN object with pins as defined
@@ -108,48 +108,57 @@ void setup() {
 
 void printHSFrame(CAN_FRAME &frame) {
   digitalWrite(CanActivity, LOW);
-  String line = String(millis());
+  char millistring[15];
+  sprintf(millistring, "%Lu", millis());
+  strcat(buf, millistring);
+  strcat(buf, ",0,");
+
   if ( frame.extended ) {
     char hexval[9];
     sprintf(hexval, "%08x", frame.id);
-    line += ",0," + String(hexval);
+    strcat(buf, hexval);    
+
   } else {
     char hexval[4];
     sprintf(hexval, "%03x", frame.id);
-    line += "," + String(hexval);
+    strcat(buf, hexval);    
   }
 
   for (int count = 0; count < frame.length; count++) {
     char hexval[3];
     sprintf(hexval, "%02x", frame.data.bytes[count]);
-    line += "," + String(hexval);
+    strcat(buf, ",");
+    strcat(buf, hexval);
   }
-  line += "\n";
-  buf += line;
+  strcat(buf, "\n");
   digitalWrite(CanActivity, HIGH);
  
 }
 
 void printLSFrame(Frame &frame) {
   digitalWrite(CanActivity, LOW);
-  String line = String(millis());
+  char millistring[15];
+  sprintf(millistring, "%Lu", millis());
+  strcat(buf, millistring);
+  strcat(buf, ",1,");
+  
   if ( frame.extended ) {
     char hexval[9];
     sprintf(hexval, "%08x", frame.id);
-    line += "," + String(hexval);
+    strcat(buf, hexval);   
   } else {
     char hexval[4];
     sprintf(hexval, "%03x", frame.id);
-    line += ",1," + String(hexval);
+    strcat(buf, hexval); 
   }
 
   for (int count = 0; count < frame.length; count++) {
     char hexval[3];
     sprintf(hexval, "%02x", frame.data.bytes[count]);
-    line += "," + String(hexval);
+    strcat(buf, ",");
+    strcat(buf, hexval); 
   }
-  line += "\n";
-  buf += line;
+  strcat(buf, "\n");
   digitalWrite(CanActivity, HIGH);
  
 }
@@ -158,14 +167,13 @@ void printLSFrame(Frame &frame) {
 
 void writeToSD() {
   digitalWrite(Red, LOW);
-  char write_buffer[buf.length() + 1];
-  buf.toCharArray(write_buffer, buf.length() + 1);
-
+  
   FS.Open("0:", fname, true);
   FS.GoToEnd();
-  FS.Write(write_buffer);
+  FS.Write(buf);
   FS.Close();
-  buf = "";
+  //memset(buf, 0, sizeof buf);
+  buf[0] = 0x00;
   digitalWrite(Red, HIGH);
 }
 
@@ -197,7 +205,7 @@ void loop() {
       printLSFrame(message);
     }
 
-    if (buf.length() > 8192) {
+    if (strlen(buf) > 9250) {
       writeToSD();
     }
   }
