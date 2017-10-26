@@ -90,7 +90,7 @@ void setup() {
   attachInterrupt(SWC_INT, CANHandler, FALLING);
 
   // Filter only the required packets from LS - Cause it's a slow write to SD..
-  // 0100A0B0 - TPMS
+  // 1000A0B0 - TPMS
   // 100A6097 - OnStar GPS
   // 100AA097 - OnStar GPS
   // 100AC097 - OnStar GPS
