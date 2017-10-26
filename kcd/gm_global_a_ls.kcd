@@ -4,6 +4,7 @@
     xsi:noNamespaceSchemaLocation="Definition.xsd">
   <Document name="GMLAN_LS" version="0.1" author="TMKDEV" company="TMKDEV" date='2017-10-07'/>
   <Node id="97" name="VCIM"/>
+  <Node id="C1" name="TPMS"/>
   <Bus name="GMLAN_LS">
     <Message id="0x100aa097" length="8" name="GPS Lat Long"  format="extended">
       <Producer>
@@ -58,6 +59,23 @@
       </Signal>
       <Signal name="elevation" offset="56" length="8">
          <Value type="unsigned" slope="1" intercept="0" unit="m"/>
+      </Signal>
+    </Message>
+    <Message id="0x1000A0C1" length="8" name="TPMS"  format="extended">
+      <Producer>
+        <NodeRef id="C1"/>
+      </Producer>
+      <Signal name="left_front_pressure" offset="16" length="8" endianess="big">
+         <Value type="unsigned" slope="0.5" intercept="0" unit="psi"/>
+      </Signal>
+      <Signal name="left_rear_pressure" offset="24" length="8" endianess="big">
+         <Value type="unsigned" slope="0.5" intercept="0" unit="psi"/>
+      </Signal>
+      <Signal name="right_front_pressure" offset="32" length="8" endianess="big">
+         <Value type="unsigned" slope="0.5" intercept="0" unit="psi"/>
+      </Signal>
+      <Signal name="right_rear_pressure" offset="40" length="8" endianess="big">
+         <Value type="unsigned" slope="0.5" intercept="0" unit="psi"/>
       </Signal>
     </Message>
   </Bus>
