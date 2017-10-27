@@ -196,13 +196,18 @@ void loop() {
   if ( logging == 0 ) {
     startlog = digitalRead(SW2);
     if ( startlog == LOW ) {
-      sprintf(fname, "HS_%04d", millis() % 10000);
-      Serial.println(fname);
-      FS.CreateNew("0:", fname);
-      FS.Close();
-      logging = 1;
-      digitalWrite(Green, LOW);
-      delay(50);
+      for (int filenum = 0; filenum < 100; filenum++) {
+        sprintf(fname, "CANLOG_%03d", filenum);
+        if (!SD.FileExists(fname)) {
+          Serial.println(fname);
+          FS.CreateNew("0:", fname);
+          FS.Close();
+          logging = 1;
+          digitalWrite(Green, LOW);
+          delay(50);
+          break;
+        }
+      }
     }
 
   }  else {
