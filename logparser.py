@@ -1,9 +1,9 @@
 import logging
 
 import can4python
-from can4python.canframe import CanFrame
 import pandas as pd
 import yaml
+import click
 
 from oppdr.canlogs import CanLogHandler
 from oppdr.graphfactory import *
