@@ -2,7 +2,7 @@
 <NetworkDefinition xmlns="http://kayak.2codeornot2code.org/1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="Definition.xsd">
-  <Document name="GMLAN_LS" version="0.1" author="TMKDEV" company="TMKDEV" date='2017-10-07'/>
+  <Document name="GMLAN_LS" version="0.2" author="TMKDEV" company="TMKDEV" date='2017-10-26'/>
   <Node id="97" name="VCIM"/>
   <Node id="C1" name="TPMS"/>
   <Bus name="GMLAN_LS">
