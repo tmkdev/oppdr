@@ -90,10 +90,8 @@ void setup() {
   attachInterrupt(SWC_INT, CANHandler, FALLING);
 
   // Filter only the required packets from LS - Cause it's a slow write to SD..
-  // 1000A0XX - TPMS
-  // 100A6097 - OnStar GPS
-  // 100AA097 - OnStar GPS
-  // 100AC097 - OnStar GPS
+  // GMLAN
+  // 29 bit - 3 bit priority, 13 bit arbid, 13 bit senderid. Filtering on arbid.
   SWCAN.InitFilters(false);
   SWCAN.SetRXMask(MASK0, 0x03ff0000, 1); // ONSTAR (0x053-0x056)
   SWCAN.SetRXFilter(FILTER0, 0x000A0000, 1);
