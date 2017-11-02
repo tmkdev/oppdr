@@ -95,10 +95,10 @@ void setup() {
   // 100AA097 - OnStar GPS
   // 100AC097 - OnStar GPS
   SWCAN.InitFilters(false);
-  SWCAN.SetRXMask(MASK0, 0x1FFF1FFF, 1); // ONSTAR
-  SWCAN.SetRXFilter(FILTER0, 0x100A0097, 1);
-  SWCAN.SetRXMask(MASK1, 0x1FFFE000, 1); // TPMS
-  SWCAN.SetRXFilter(FILTER1, 0x1000A000, 1);
+  SWCAN.SetRXMask(MASK0, 0x03ff0000, 1); // ONSTAR (0x053-0x056)
+  SWCAN.SetRXFilter(FILTER0, 0x000A0000, 1);
+  SWCAN.SetRXMask(MASK1, 0x03FFE000, 1); // TPMS (0x005)
+  SWCAN.SetRXFilter(FILTER2, 0x0000A000, 1);
 
   pinMode(Red, OUTPUT);
   pinMode(Yellow, OUTPUT);
