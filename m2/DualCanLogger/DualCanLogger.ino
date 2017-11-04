@@ -93,7 +93,7 @@ void setup() {
   // GMLAN
   // 29 bit - 3 bit priority, 13 bit arbid, 13 bit senderid. Filtering on arbid.
   SWCAN.InitFilters(false);
-  SWCAN.SetRXMask(MASK0, 0x03ff0000, 1); // ONSTAR (0x053-0x056)
+  SWCAN.SetRXMask(MASK0, 0x001f0000, 1); // ONSTAR (0x053-0x056)
   SWCAN.SetRXFilter(FILTER0, 0x000A0000, 1);
   SWCAN.SetRXMask(MASK1, 0x03FFE000, 1); // TPMS (0x005)
   SWCAN.SetRXFilter(FILTER2, 0x0000A000, 1);
@@ -219,7 +219,7 @@ void loop() {
       printLSFrame(message);
     }
 
-    if (strlen(buf) > 9250) {
+    if (strlen(buf) > 2048) {
       writeToSD();
     }
   }
