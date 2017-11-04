@@ -6,7 +6,7 @@ import pandas as pd
 
 class CanLogHandler(object):
     _logtypes = {'candump': re.compile("\(([0-9]+\.[0-9]+)\) can([0-9]) ([0-9a-fA-F]{3,8})#([0-9a-fA-F]{0,16})"),
-                 'cblogger_nobus': re.compile("([0-9]+),([0-9a-fA-F]{1,8}),([0-9a-fA-F,]+)"),
+                 'cblogger_nobus': re.compile("([0-9]+),([0-9a-fA-F]{2,8}),([0-9a-fA-F,]+)"),
                  'cblogger_bus': re.compile("([0-9]+),([0-9]),([0-9a-fA-F]{1,8}),([0-9a-fA-F,]+)"),
                  }
 
@@ -58,7 +58,7 @@ class CanLogHandler(object):
     def cbloggerframe(self, frameregex):
         busoffset=0
         bus = 0
-        if frameregex.groups == 4:
+        if len(frameregex.groups()) == 4:
             busoffset=1
             bus = int(frameregex.group(2))
 
