@@ -40,7 +40,7 @@ FileStore FS;
 int startlog = 0;
 
 char fname[10];
-char buf[10000];
+char buf[3000];
 int logging = 0;
 
 // Create CAN object with pins as defined
