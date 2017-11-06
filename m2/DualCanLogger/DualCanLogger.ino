@@ -93,11 +93,16 @@ void setup() {
   // GMLAN
   // 29 bit - 3 bit priority, 13 bit arbid, 13 bit senderid. Filtering on arbid.
   SWCAN.InitFilters(false);
-  SWCAN.SetRXMask(MASK0, 0x001f0000, 1); // ONSTAR (0x053-0x056)
-  SWCAN.SetRXFilter(FILTER0, 0x000A0000, 1);
-  SWCAN.SetRXMask(MASK1, 0x03FFE000, 1); // TPMS (0x005)
-  SWCAN.SetRXFilter(FILTER2, 0x0000A000, 1);
-
+  SWCAN.SetRXMask(MASK0, 0x03FF0000, true); // ONSTAR (0x053-0x056)
+  SWCAN.SetRXFilter(FILTER0, 0x000A0000, true);
+  SWCAN.SetRXFilter(FILTER1, 0x00000000, true);
+  
+  SWCAN.SetRXMask(MASK1, 0x03FFE000, true); // TPMS (0x005)
+  SWCAN.SetRXFilter(FILTER2, 0x0000A000, true);
+  SWCAN.SetRXFilter(FILTER3, 0x00000000, true);  
+  SWCAN.SetRXFilter(FILTER4, 0x00000000, true);
+  SWCAN.SetRXFilter(FILTER5, 0x00000000, true);
+  
   pinMode(Red, OUTPUT);
   pinMode(Yellow, OUTPUT);
   pinMode(CanActivity, OUTPUT);

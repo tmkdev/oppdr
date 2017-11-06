@@ -74,7 +74,7 @@ class CanLogHandler(object):
         except:
             logging.exception(stringdata)
 
-        packet = {'timestamp': timestamp, 'frameformat': frameformat, 'frameid': frameid, 'data': bindata, 'bus': 0}
+        packet = {'timestamp': timestamp, 'frameformat': frameformat, 'frameid': frameid, 'data': bindata, 'bus': bus}
 
         return packet
 
