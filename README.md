@@ -15,6 +15,7 @@ Dashware:
 Logs:
     I have a couple of sample logs, using a Macchina M2 with the Dual Can logger firmware. Log parser will also
     understand candump formats (great for pi's)
+    CANLOG_002 recorded with the Macchina M2 - Dual Can Logger.
 
 M2:
     Collection of arduino sketches for logging Can. Focused on GMLAN Global A collection. Adjust as needed.
@@ -22,3 +23,5 @@ M2:
 
 output:
     Sample chart and csv for Dashware.
+    http://htmlpreview.github.io/?https://github.com/tmkdev/oppdr/blob/master/output/CANLOG_002.html
+
