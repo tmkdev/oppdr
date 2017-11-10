@@ -66,16 +66,16 @@
         <NodeRef id="C1"/>
       </Producer>
       <Signal name="left_front_pressure" offset="16" length="8" endianess="big">
-         <Value type="unsigned" slope="0.5" intercept="0" unit="psi"/>
+         <Value type="unsigned" slope="0.5802" intercept="0" unit="PSI"/>
       </Signal>
       <Signal name="left_rear_pressure" offset="24" length="8" endianess="big">
-         <Value type="unsigned" slope="0.5" intercept="0" unit="psi"/>
+         <Value type="unsigned" slope="0.5802" intercept="0" unit="PSI"/>
       </Signal>
       <Signal name="right_front_pressure" offset="32" length="8" endianess="big">
-         <Value type="unsigned" slope="0.5" intercept="0" unit="psi"/>
+         <Value type="unsigned" slope="0.5802" intercept="0" unit="PSI"/>
       </Signal>
       <Signal name="right_rear_pressure" offset="40" length="8" endianess="big">
-         <Value type="unsigned" slope="0.5" intercept="0" unit="psi"/>
+         <Value type="unsigned" slope="0.5802" intercept="0" unit="PSI"/>
       </Signal>
     </Message>
   </Bus>
