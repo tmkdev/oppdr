@@ -40,7 +40,7 @@ FileStore FS;
 int startlog = 0;
 
 char fname[10];
-char buf[3000];
+char buf[19000];
 int logging = 0;
 
 // Create CAN object with pins as defined
@@ -73,7 +73,7 @@ void setup() {
   // Set up SPI Communication
   // dataMode can be SPI_MODE0 or SPI_MODE3 only for MCP2515
   SPI.setClockDivider(SPI_CLOCK_DIV2);
-  SPI.setDataMode(SPI_MODE0);
+  SPI.setDataMode(SPI_MODE0); v 
   SPI.setBitOrder(MSBFIRST);
   SPI.begin();
 
@@ -93,22 +93,21 @@ void setup() {
   // GMLAN
   // 29 bit - 3 bit priority, 13 bit arbid, 13 bit senderid. Filtering on arbid.
   SWCAN.InitFilters(false);
-  SWCAN.SetRXMask(MASK0, 0x03FF0000, true); // ONSTAR (0x053-0x056)
-  SWCAN.SetRXFilter(FILTER0, 0x000A0000, true);
-  SWCAN.SetRXFilter(FILTER1, 0x00000000, true);
-  
-  SWCAN.SetRXMask(MASK1, 0x03FFE000, true); // TPMS (0x005)
-  SWCAN.SetRXFilter(FILTER2, 0x0000A000, true);
-  SWCAN.SetRXFilter(FILTER3, 0x00000000, true);  
-  SWCAN.SetRXFilter(FILTER4, 0x00000000, true);
-  SWCAN.SetRXFilter(FILTER5, 0x00000000, true);
-  
+  SWCAN.SetRXMask(MASK0, 0x03FF0000, 1); // ONSTAR (0x053-0x056)
+  SWCAN.SetRXMask(MASK1, 0x03FFE000, 1); // TPMS (0x005)
+  SWCAN.SetRXFilter(FILTER0, 0x000A0000, 1);
+  SWCAN.SetRXFilter(FILTER1, 0x00000000, 1);
+  SWCAN.SetRXFilter(FILTER2, 0x0000A000, 1);
+  SWCAN.SetRXFilter(FILTER3, 0x00000000, 1);
+  SWCAN.SetRXFilter(FILTER4, 0x00000000, 1);
+  SWCAN.SetRXFilter(FILTER5, 0x00000000, 1);
+
   pinMode(Red, OUTPUT);
   pinMode(Yellow, OUTPUT);
   pinMode(CanActivity, OUTPUT);
   pinMode(Green, OUTPUT);
-  pinMode(SW1, INPUT);
-  pinMode(SW2, INPUT);
+  pinMode(SW1, INPUT); //Stop Recording
+  pinMode(SW2, INPUT); //Start Recording
   digitalWrite(Red, HIGH);
   digitalWrite(Green, HIGH);
   digitalWrite(Yellow, LOW);
@@ -116,7 +115,7 @@ void setup() {
 
 }
 
-
+a
 //Timestamp,ID,Data0,Data1,...,
 //412687,17F,00,00,00,00,00,00,00,00
 
@@ -177,25 +176,21 @@ void printLSFrame(Frame &frame) {
  
 }
 
-
-
 void writeToSD() {
   digitalWrite(Red, LOW);
-  
   FS.Open("0:", fname, true);
   FS.GoToEnd();
-  FS.Write(buf);
+  FS.Write( buf );
   FS.Close();
-  //memset(buf, 0, sizeof buf);
   buf[0] = 0x00;
   digitalWrite(Red, HIGH);
 }
 
+CAN_FRAME incoming;
+Frame message;
 
 void loop() {
-  CAN_FRAME incoming;
-  Frame message; 
-  
+
   if ( logging == 0 ) {
     startlog = digitalRead(SW2);
     if ( startlog == LOW ) {
@@ -224,7 +219,7 @@ void loop() {
       printLSFrame(message);
     }
 
-    if (strlen(buf) > 2048) {
+    if (strlen(buf) > 16000) {
       writeToSD();
     }
   }
