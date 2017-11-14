@@ -1,4 +1,4 @@
-sampletime: 0.5
+sampletime: 2
 kcd:
   - kcd/gm_global_a_hs.kcd
   - kcd/gm_global_a_ls.kcd
@@ -77,6 +77,21 @@ graphs:
         y: 'transmission_commanded_gear'
         color: 'red'
         type: line_cross
+      "Estimated Gear":
+        x: 'time'
+        y: 'transmission_estimated_gear'
+        color: 'green'
+        type: line_cross
+      "Clutch Engaged":
+        x: 'time'
+        y: 'top_clutch_travel'
+        color: 'blue'
+        type: line_cross
+      "Skip Shift Active":
+        x: 'time'
+        y: 'skip_shift_active'
+        color: 'orange'
+        type: line_cross
 
   braking:
     title: "ChassisInfo"
@@ -134,5 +149,15 @@ graphs:
         color: 'blue'
         type: line_cross
 
+  map:
+    title: "Map"
+    x_axis_type: linear
+    y_axis_label: "Latitude"
+    series:
+      "GPS":
+        x: 'x_webmercator'
+        y: 'y_webmercator'
+        color: 'red'
+        type: line_cross
 
 

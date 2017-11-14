@@ -1,5 +1,6 @@
 import logging
 import os
+import math
 
 import can4python
 import pandas as pd
@@ -44,6 +45,8 @@ def cli(ctx, debug, config, kcd_path, logpath, outputpath, log, showgraph):
     pdframe = pdframe.assign(accel=pdframe['speed_average_non_driven_valid'].diff() * 0.277778 / float(pdrconfig['sampletime']))
     pdframe = pdframe.assign(lat_g=pdframe['vehicle_stability_lateral_acceleration']/9.81)
     pdframe = pdframe.assign(long_g=pdframe['accel']/9.81)
+
+
     click.echo('Finished log processing')
 
     ctx.obj['PD_FRAME'] = pdframe
@@ -70,6 +73,7 @@ def graph(ctx):
                               showplot=ctx.obj['SHOWGRAPH'])
 
 def getpdrconfig(file):
+    config = None
     with open(file, 'r') as stream:
         try:
             config = yaml.load(stream)

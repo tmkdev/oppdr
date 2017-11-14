@@ -21,7 +21,9 @@ M2:
     Collection of arduino sketches for logging Can. Focused on GMLAN Global A collection. Adjust as needed.
     In theory, you could send OBD packets and write a KCD for mapping the responses to data to output/charts.
 
+    S2 Starts recording. S1 stops.
+
 output:
     Sample chart and csv for Dashware.
-    http://htmlpreview.github.io/?https://github.com/tmkdev/oppdr/blob/master/output/CANLOG_002.html
+    http://htmlpreview.github.io/?https://github.com/tmkdev/oppdr/blob/master/output/CANLOG_000.html
 

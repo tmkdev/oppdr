@@ -2,6 +2,7 @@ import logging
 
 from bokeh.plotting import *
 from bokeh.models import HoverTool
+from bokeh.tile_providers import STAMEN_TERRAIN
 
 
 def getgraphparm(config, graph, key):
@@ -54,13 +55,19 @@ class GraphFactory(object):
 
             for series in graphobj['series']:
                 sdict = graphobj['series'][series]
+                if sdict['y'] in self.pddata:
+                    if 'line' in sdict['type']:
+                        g.line(x=sdict['x'], y=sdict['y'], color=sdict['color'], source=ds, legend=series)
+                    if 'circle' in sdict['type']:
+                        g.circle(x=sdict['x'], y=sdict['y'], color=sdict['color'], source=ds, size=2, legend=series)
+                    if 'cross' in sdict['type']:
+                        g.cross(x=sdict['x'], y=sdict['y'], color=sdict['color'], source=ds, size=2, legend=series)
+                else:
+                    logging.warning('Series {0} skipped. Not in dataframe.'.format(sdict['y']))
 
-                if 'line' in sdict['type']:
-                    g.line(x=sdict['x'], y=sdict['y'], color=sdict['color'], source=ds, legend=series)
-                if 'circle' in sdict['type']:
-                    g.circle(x=sdict['x'], y=sdict['y'], color=sdict['color'], source=ds, size=2, legend=series)
-                if 'cross' in sdict['type']:
-                    g.cross(x=sdict['x'], y=sdict['y'], color=sdict['color'], source=ds, size=2, legend=series)
+            if graphobj['title'] == 'Map':
+                g.axis.visible = False
+                g.add_tile(STAMEN_TERRAIN)
 
             g.legend.location = "top_left"
             g.legend.click_policy = "hide"

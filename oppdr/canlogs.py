@@ -3,6 +3,7 @@ import re
 import can4python
 from can4python.canframe import CanFrame
 import pandas as pd
+import math
 
 class CanLogHandler(object):
     _logtypes = {'candump': re.compile("\(([0-9]+\.[0-9]+)\) can([0-9]) ([0-9a-fA-F]{3,8})#([0-9a-fA-F]{0,16})"),
@@ -25,10 +26,20 @@ class CanLogHandler(object):
                         cf = CanFrame(frame_id=canframe['frameid'],
                                       frame_data=canframe['data'],
                                       frame_format=canframe['frameformat'])
+                        sigs = {}
+                        try:
+                            sigs = cf.unpack(self.canconfigs[canframe['bus']].framedefinitions)
+                            #Todo: Maybe use pyproj.. ?
+                            if 'latitude' in sigs:
+                                sigs['x_webmercator'] = sigs['longitude'] * 20037508.34 / 180
+                                sigs['y_webmercator'] = (math.log(math.tan((90 + sigs['latitude']) * math.pi / 360))
+                                                         / (math.pi / 180)) * (20037508.34 / 180)
 
-                        sigs = cf.unpack(self.canconfigs[canframe['bus']].framedefinitions)
-                        sigs['time'] = canframe['timestamp']
-                        pdlist.append(sigs)
+                            sigs['time'] = canframe['timestamp']
+                            pdlist.append(sigs)
+                        except can4python.exceptions.CanException:
+                            logging.exception('Frame Decode Error')
+
 
         return pdlist
 

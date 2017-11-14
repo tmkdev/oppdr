@@ -144,6 +144,10 @@
       <Producer>
         <NodeRef id="3"/>
       </Producer>
+      <Signal name="transmission_torque_converter_clutch_mode" offset="3" length="2" endianess="big">
+         <Value type="unsigned" slope="1"/>
+         <Notes>0-Unlocked, 1-Transition, 2-Controlled Slip, 3-Locked, 7-Not Supported</Notes>
+      </Signal>
       <Signal name="transmission_estimated_gear" offset="0" length="4" endianess="big">
          <Value type="unsigned" slope="1" intercept="0" unit="Gear"/>
       </Signal>
@@ -153,6 +157,8 @@
       <Signal name="transmission_commanded_gear" offset="8" length="4" endianess="big">
          <Value type="unsigned" slope="1" intercept="0" unit="Gear"/>
       </Signal>
+      <Signal name="top_clutch_travel" offset="15" length="1"/>
+      <Signal name="skip_shift_active" offset="32" length="1"/>
     </Message>
 
 
