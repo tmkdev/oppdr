@@ -73,7 +73,7 @@ void setup() {
   // Set up SPI Communication
   // dataMode can be SPI_MODE0 or SPI_MODE3 only for MCP2515
   SPI.setClockDivider(SPI_CLOCK_DIV2);
-  SPI.setDataMode(SPI_MODE0); v 
+  SPI.setDataMode(SPI_MODE0);
   SPI.setBitOrder(MSBFIRST);
   SPI.begin();
 
@@ -115,7 +115,6 @@ void setup() {
 
 }
 
-a
 //Timestamp,ID,Data0,Data1,...,
 //412687,17F,00,00,00,00,00,00,00,00
 
