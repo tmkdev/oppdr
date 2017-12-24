@@ -3,7 +3,7 @@ import re
 import can4python
 from can4python.canframe import CanFrame
 import pandas as pd
-import math
+from pyproj import Proj
 
 class CanLogHandler(object):
     _logtypes = {'candump': re.compile("\(([0-9]+\.[0-9]+)\) can([0-9]) ([0-9a-fA-F]{3,8})#([0-9a-fA-F]{0,16})"),
@@ -18,6 +18,8 @@ class CanLogHandler(object):
     def parse(self):
         pdlist = []
 
+        webmercator = Proj(init='epsg:3857')
+
         with open(self.filename, 'r') as rawlog:
             for line in rawlog:
                 canframe = self.parseframe(line)
@@ -31,9 +33,9 @@ class CanLogHandler(object):
                             sigs = cf.unpack(self.canconfigs[canframe['bus']].framedefinitions)
                             #Todo: Maybe use pyproj.. ?
                             if 'latitude' in sigs:
-                                sigs['x_webmercator'] = sigs['longitude'] * 20037508.34 / 180
-                                sigs['y_webmercator'] = (math.log(math.tan((90 + sigs['latitude']) * math.pi / 360))
-                                                         / (math.pi / 180)) * (20037508.34 / 180)
+                                x, y = webmercator( sigs['longitude'], sigs['latitude'])
+                                sigs['x_webmercator'] = x
+                                sigs['y_webmercator'] = y
 
                             sigs['time'] = canframe['timestamp']
                             pdlist.append(sigs)

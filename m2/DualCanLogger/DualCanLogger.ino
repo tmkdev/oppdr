@@ -19,7 +19,7 @@
 #include <MCP2515_sw_can.h>
 
 // Pin definitions specific to how the MCP2515 is wired up.
-#define CS_PIN    SPI0_CS3
+#define CS_PIN    SPI0_CS3 
 #define INT_PIN    SWC_INT
 
 #define Serial SerialUSB
@@ -57,15 +57,20 @@ void setup() {
   SD.Init();
   FS.Init();
 
+  Can0.setRxBufferSize(12);
+  Can0.setTxBufferSize(4);
+  //Can0.setListenOnlyMode(True); Not in the current library version
+
   Can0.begin(CAN_BPS_500K);
 
   int filter;
   //extended
-  for (filter = 0; filter < 2; filter++) {
-    Can0.setRXFilter(filter, 0, 0, true);
-  }
+  //for (filter = 0; filter < 2; filter++) {
+  //  Can0.setRXFilter(filter, 0, 0, true);
+  //}
+  
   //standard
-  for (int filter = 2; filter < 7; filter++) {
+  for (int filter = 0; filter < 7; filter++) {
     Can0.setRXFilter(filter, 0, 0, false);
   }
 
@@ -128,12 +133,12 @@ void printHSFrame(CAN_FRAME &frame) {
   if ( frame.extended ) {
     char hexval[9];
     sprintf(hexval, "%08x", frame.id);
-    strcat(buf, hexval);    
+    strcat(buf, hexval);
 
   } else {
     char hexval[4];
     sprintf(hexval, "%03x", frame.id);
-    strcat(buf, hexval);    
+    strcat(buf, hexval);
   }
 
   for (int count = 0; count < frame.length; count++) {
@@ -144,7 +149,7 @@ void printHSFrame(CAN_FRAME &frame) {
   }
   strcat(buf, "\n");
   digitalWrite(CanActivity, HIGH);
- 
+
 }
 
 void printLSFrame(Frame &frame) {
@@ -153,26 +158,26 @@ void printLSFrame(Frame &frame) {
   sprintf(millistring, "%Lu", millis());
   strcat(buf, millistring);
   strcat(buf, ",1,");
-  
+
   if ( frame.extended ) {
     char hexval[9];
     sprintf(hexval, "%08x", frame.id);
-    strcat(buf, hexval);   
+    strcat(buf, hexval);
   } else {
     char hexval[4];
     sprintf(hexval, "%03x", frame.id);
-    strcat(buf, hexval); 
+    strcat(buf, hexval);
   }
 
   for (int count = 0; count < frame.length; count++) {
     char hexval[3];
     sprintf(hexval, "%02x", frame.data.bytes[count]);
     strcat(buf, ",");
-    strcat(buf, hexval); 
+    strcat(buf, hexval);
   }
   strcat(buf, "\n");
   digitalWrite(CanActivity, HIGH);
- 
+
 }
 
 void writeToSD() {
@@ -187,6 +192,14 @@ void writeToSD() {
 
 CAN_FRAME incoming;
 Frame message;
+
+void checkbuffer() {
+  if (strlen(buf) > 4096) {
+    writeToSD();
+  }
+}
+
+
 
 void loop() {
 
@@ -209,18 +222,15 @@ void loop() {
 
   }  else {
 
-    if (Can0.available() > 0) {
+    while (Can0.available() > 0 && digitalRead(SW1) == HIGH ) {
       Can0.read(incoming);
       printHSFrame(incoming);
+      if (SWCAN.GetRXFrame(message)) {
+        printLSFrame(message);
+      }
+      checkbuffer();
     }
 
-    if (SWCAN.GetRXFrame(message)) {
-      printLSFrame(message);
-    }
-
-    if (strlen(buf) > 16000) {
-      writeToSD();
-    }
   }
 
   if ( logging == 1 && digitalRead(SW1) == LOW ) {
