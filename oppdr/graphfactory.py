@@ -46,7 +46,8 @@ class GraphFactory(object):
                        x_axis_label=getgraphparm(self.pdrconfig, graph, 'x_axis_label'),
                        x_axis_type=x_axis_type,
                        y_axis_label=graphobj['y_axis_label'],
-                       output_backend="webgl")
+                       output_backend="webgl",
+                       plot_height=400,)
 
             if 'x_range' in graphobj:
                 g.x_range = glist[int(graphobj['x_range'])].x_range
@@ -74,7 +75,7 @@ class GraphFactory(object):
 
             glist.append(g)
 
-        plotobj = gridplot(glist, ncols=3)
+        plotobj = gridplot(glist, ncols=2, sizing_mode='scale_width')
 
         if showplot:
             show(plotobj)
