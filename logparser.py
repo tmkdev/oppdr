@@ -41,7 +41,8 @@ def cli(ctx, debug, config, kcd_path, logpath, outputpath, log, showgraph):
     click.echo('Starting log processing')
     pdframe = canloghandler.getdataframe()
 
-    pdframe = pdframe.resample('{0}S'.format(pdrconfig['sampletime'])).mean().interpolate(method='linear', limit=10, limit_direction='both')
+    pdframe = pdframe.ffill().resample('{0}S'.format(pdrconfig['sampletime'])).mean()
+
     pdframe = pdframe.assign(accel=pdframe['speed_average_non_driven_valid'].diff() * 0.277778 / float(pdrconfig['sampletime']))
     pdframe = pdframe.assign(lat_g=pdframe['vehicle_stability_lateral_acceleration']/9.81)
     pdframe = pdframe.assign(long_g=pdframe['accel']/9.81)
