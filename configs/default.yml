@@ -1,4 +1,4 @@
-sampletime: 2
+sampletime: 1.0
 kcd:
   - kcd/gm_global_a_hs.kcd
   - kcd/gm_global_a_ls.kcd
@@ -148,6 +148,34 @@ graphs:
         y: 'boost_pressure_indication'
         color: 'blue'
         type: line_cross
+
+  tpms:
+    title: "Tire Pressures"
+    x_axis_label: "Time"
+    y_axis_label: "PSI"
+    x_range: 0
+    series:
+      "Left Front":
+        x: 'time'
+        y: 'left_front_pressure'
+        color: 'blue'
+        type: line_cross
+      "Right Front":
+        x: 'time'
+        y: 'right_front_pressure'
+        color: 'cyan'
+        type: line_cross
+      "Left Rear":
+        x: 'time'
+        y: 'left_rear_pressure'
+        color: 'magenta'
+        type: line_cross
+      "Right Rear":
+        x: 'time'
+        y: 'right_rear_pressure'
+        color: 'red'
+        type: line_cross
+
 
   map:
     title: "Map"
